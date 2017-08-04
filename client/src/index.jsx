@@ -15,7 +15,42 @@ class App extends React.Component {
 
   search (term) {
     console.log(`${term} was searched`);
-    // TODO
+    // TODO post request
+    $.ajax({
+      method:'POST',
+      url: '/repos',
+      data: {username: term},
+      dataType: 'json',
+      success: function(data) {
+        console.log('repo recieved!');
+        console.log(data);
+      }, 
+      error: function() {
+        console.log('failed to recieve');
+      }
+    }).done(
+      $.ajax({
+        method:'GET',
+        url: '/repos',
+        data: {username: term},
+        dataType: 'json',
+        success: function(data) {
+          console.log('repo recieved!');
+          console.log(data);
+        }, 
+        error: function() {
+          console.log('failed to recieve');
+        }
+      })
+    );
+
+    
+
+    // $.post( "/repos", {data: term})
+    //   .done(function( data ) {
+    //     console.log(data);
+    // });
+
   }
 
   render () {
